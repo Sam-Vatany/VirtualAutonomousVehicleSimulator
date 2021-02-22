@@ -12,14 +12,21 @@ public class VehicleAIController : MonoBehaviour{
     public float totalPower;
     private bool isBraking = false;
     public float brakeForce;
-    public float vertical , horizontal ;
+    public float horizontal ;
 
     private float radius = 8 , distance;
     public CarNode currentNode;
 
     private Vector3 velocity, Destination, lastPosition;
 
-    public float sensorLength = 3f;
+    public float forwardSensorLength = 10;
+    public float angledSensorLength = 5;
+    public float frontSensorAngle = 30;
+    public float targetDistance = 4;
+    
+
+    private bool avoiding = false;
+    private bool reachedTargetDistance = false;
 
     void Start() {
 
@@ -32,7 +39,6 @@ public class VehicleAIController : MonoBehaviour{
         steerVehicle();
         }
         catch{}
-    
     }
 
     private void sensors() {
@@ -41,67 +47,144 @@ public class VehicleAIController : MonoBehaviour{
         sensorStartPos += transform.forward;
         sensorStartPos += transform.up;
         isBraking = false;
+        float avoidMultiplier = 0;
+        avoiding = false;
+        reachedTargetDistance = false;
 
         //front center sensor
-        if (Physics.Raycast(sensorStartPos, transform.forward, out hit, sensorLength)) {
+        if (Physics.Raycast(sensorStartPos, transform.forward, out hit, forwardSensorLength)) {
             Debug.DrawLine(sensorStartPos, hit.point, Color.red, 0.01f);
             if (hit.collider.CompareTag("Character")) {
-                isBraking = true;
-                applyBraking();
+                if (frontLeftWheelCollider.rpm > 40) {
+                    isBraking = true;
+                    applyBraking();
+                }
+                if (Physics.Raycast(sensorStartPos, transform.forward, out hit, targetDistance) == false) {
+                    moveToTargetDistance();
+                }
+                if (Physics.Raycast(sensorStartPos, transform.forward, out hit, targetDistance)) {
+                    isBraking = true;
+                    applyBraking();
+                }
             }
         }
         
         //front right sensor
         sensorStartPos += transform.right * 1.1f;
-        if (Physics.Raycast(sensorStartPos, transform.forward, out hit, sensorLength)) {
+        if (Physics.Raycast(sensorStartPos, transform.forward, out hit, forwardSensorLength)) {
             Debug.DrawLine(sensorStartPos, hit.point, Color.red, 0.01f);
             if (hit.collider.CompareTag("Character")) {
-                isBraking = true;
-                applyBraking();
+                if (frontLeftWheelCollider.rpm > 40) {
+                    isBraking = true;
+                    applyBraking();
+                }
+                if (Physics.Raycast(sensorStartPos, transform.forward, out hit, targetDistance) == false) {
+                    moveToTargetDistance();
+                }
+                if (Physics.Raycast(sensorStartPos, transform.forward, out hit, targetDistance)) {
+                    isBraking = true;
+                    applyBraking();
+                }
+            }
+        }
+
+        //front right angle sensor
+        if (Physics.Raycast(sensorStartPos, Quaternion.AngleAxis(frontSensorAngle, transform.up) * transform.forward, out hit, angledSensorLength)) {
+            Debug.DrawLine(sensorStartPos, hit.point, Color.red, 0.01f);
+            if (hit.collider.CompareTag("Character")) {
+                avoiding = true;
+                avoidMultiplier = -0.5f;
             }
         }
 
         //front left sensor
         sensorStartPos -= transform.right * 2.2f; 
-        if (Physics.Raycast(sensorStartPos, transform.forward, out hit, sensorLength)) {
+        if (Physics.Raycast(sensorStartPos, transform.forward, out hit, forwardSensorLength)) {
             Debug.DrawLine(sensorStartPos, hit.point, Color.red, 0.01f);
             if (hit.collider.CompareTag("Character")) {
-                isBraking = true;
-                applyBraking();
+                if (frontLeftWheelCollider.rpm > 40) {
+                    isBraking = true;
+                    applyBraking();
+                }
+                if (Physics.Raycast(sensorStartPos, transform.forward, out hit, targetDistance) == false) {
+                    moveToTargetDistance();
+                }
+                if (Physics.Raycast(sensorStartPos, transform.forward, out hit, targetDistance)) {
+                    isBraking = true;
+                    applyBraking();
+                }
+            }
+        }
+
+        //front left sensor angle
+        if (Physics.Raycast(sensorStartPos, Quaternion.AngleAxis(-frontSensorAngle, transform.up) * transform.forward, out hit, angledSensorLength)) {
+            Debug.DrawLine(sensorStartPos, hit.point, Color.red, 0.01f);
+            if (hit.collider.CompareTag("Character")) {
+                avoiding = true;
+                avoidMultiplier = -0.5f;
             }
         }
 
         //front middle right sensor 
         sensorStartPos += transform.right * 1.65f; 
-        if (Physics.Raycast(sensorStartPos, transform.forward, out hit, sensorLength)) {
+        if (Physics.Raycast(sensorStartPos, transform.forward, out hit, forwardSensorLength)) {
             Debug.DrawLine(sensorStartPos, hit.point, Color.red, 0.01f);
             if (hit.collider.CompareTag("Character")) {
-                isBraking = true;
-                applyBraking();
+                if (frontLeftWheelCollider.rpm > 40) {
+                    isBraking = true;
+                    applyBraking();
+                }
+                if (Physics.Raycast(sensorStartPos, transform.forward, out hit, targetDistance) == false) {
+                    moveToTargetDistance();
+                }
+                if (Physics.Raycast(sensorStartPos, transform.forward, out hit, targetDistance)) {
+                    isBraking = true;
+                    applyBraking();
+                }
             }
         }
 
         //front middle left sensor
         sensorStartPos -= transform.right * 1.1f; 
-        if (Physics.Raycast(sensorStartPos, transform.forward, out hit, sensorLength)) {
+        if (Physics.Raycast(sensorStartPos, transform.forward, out hit, forwardSensorLength)) {
             Debug.DrawLine(sensorStartPos, hit.point, Color.red, 0.01f);
             if (hit.collider.CompareTag("Character")) {
-                isBraking = true;
-                applyBraking();
+                if (frontLeftWheelCollider.rpm > 40) {
+                    isBraking = true;
+                    applyBraking();
+                }
+                if (Physics.Raycast(sensorStartPos, transform.forward, out hit, targetDistance) == false) {
+                    moveToTargetDistance();
+                }
+                if (Physics.Raycast(sensorStartPos, transform.forward, out hit, targetDistance)) {
+                    isBraking = true;
+                    applyBraking();
+                }
             }
+        }
+
+        if(avoiding) {
+            horizontal *= avoidMultiplier;
         }
     }
 
     private void applyBraking() {
-        frontLeftWheelCollider.motorTorque = 0;
-        frontRightWheelCollider.motorTorque = 0;
-        rearLeftWheelCollider.motorTorque = 0;
-        rearRightWheelCollider.motorTorque = 0; 
-        frontRightWheelCollider.brakeTorque = brakeForce;
-        frontLeftWheelCollider.brakeTorque = brakeForce;
-        rearLeftWheelCollider.brakeTorque = brakeForce;
-        rearRightWheelCollider.brakeTorque = brakeForce;
-    }       
+            frontLeftWheelCollider.motorTorque = 0;
+            frontRightWheelCollider.motorTorque = 0;
+            rearLeftWheelCollider.motorTorque = 0;
+            rearRightWheelCollider.motorTorque = 0; 
+            frontRightWheelCollider.brakeTorque = brakeForce;
+            frontLeftWheelCollider.brakeTorque = brakeForce;
+            rearLeftWheelCollider.brakeTorque = brakeForce;
+            rearRightWheelCollider.brakeTorque = brakeForce;
+    }  
+    
+    private void moveToTargetDistance() {
+        frontLeftWheelCollider.motorTorque = totalPower;
+        frontRightWheelCollider.motorTorque = totalPower;
+        rearLeftWheelCollider.motorTorque = totalPower;
+        rearRightWheelCollider.motorTorque = totalPower;
+    }
 
 
     void checkDistance() {
@@ -136,7 +219,9 @@ public class VehicleAIController : MonoBehaviour{
         Vector3 relativeVector = transform.InverseTransformPoint(currentNode.transform.position);
         relativeVector /= relativeVector.magnitude;
         float newSteer = (relativeVector.x  / relativeVector.magnitude) * 2;
-        horizontal = newSteer;
+        if (avoiding == false){
+            horizontal = newSteer;
+        }
         if (isBraking == false) {
             frontRightWheelCollider.brakeTorque = 0;
             frontLeftWheelCollider.brakeTorque = 0;

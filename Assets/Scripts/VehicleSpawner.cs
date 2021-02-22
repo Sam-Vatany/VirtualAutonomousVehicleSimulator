@@ -5,7 +5,7 @@ using UnityEngine;
 public class VehicleSpawner : MonoBehaviour
 {
     public GameObject aiVehicle;
-    public int vehiclesToSpawn;
+    public int vehiclesToSpawn; // Limit to number of child objects
     void Start()
     {
         StartCoroutine(Spawn());
@@ -22,7 +22,11 @@ public class VehicleSpawner : MonoBehaviour
             Transform child = children[childrenCounter++];
             obj.GetComponent<VehicleAIController>().currentNode = child.GetComponent<CarNode>();
             obj.transform.position = child.position;
-            obj.transform.Rotate(0 , child.transform.eulerAngles.y , 0);
+            obj.transform.Rotate(0, child.transform.eulerAngles.y, 0);
+
+            if (childrenCounter == children.Length) {
+                break;
+            }
             
             yield return new WaitForEndOfFrame();
             count++;

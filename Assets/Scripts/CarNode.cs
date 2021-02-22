@@ -20,6 +20,9 @@ public class CarNode : MonoBehaviour{
     void OnDrawGizmos() {
         Gizmos.color = Color.yellow;
         Gizmos.DrawSphere(transform.position ,0.5f);
+        Vector3 forward = transform.TransformDirection(Vector3.forward) * 10;
+        Gizmos.color = Color.green;
+        Gizmos.DrawRay(transform.position, forward);
     }
 
 }
