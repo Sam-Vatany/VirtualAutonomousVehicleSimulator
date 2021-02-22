@@ -21,7 +21,6 @@ public class VehicleSpawner : MonoBehaviour
             GameObject obj = Instantiate(aiVehicle);
             Transform child = children[childrenCounter++];
             obj.GetComponent<VehicleAIController>().currentNode = child.GetComponent<CarNode>();
-            print(child.position);
             obj.transform.position = child.position;
             obj.transform.Rotate(0 , child.transform.eulerAngles.y , 0);
             

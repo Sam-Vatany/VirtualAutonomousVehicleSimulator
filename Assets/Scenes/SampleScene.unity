@@ -326,7 +326,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetWheel: {fileID: 693810780}
-<<<<<<< HEAD
 --- !u!1 &127791480
 GameObject:
   m_ObjectHideFlags: 0
@@ -360,7 +359,6 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &127791482
 MonoBehaviour:
-=======
 --- !u!1 &150222705 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100000, guid: c24014bb2573314439344bb71ce5ef2e,
@@ -369,12 +367,10 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
 --- !u!64 &150222709
 MeshCollider:
->>>>>>> 2f5ef08a9218e5042b38e477333466fb7ffc28a1
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< HEAD
   m_GameObject: {fileID: 127791480}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -384,7 +380,6 @@ MeshCollider:
   previousWaypont: {fileID: 1530782719}
   nextWaypoint: {fileID: 1471835760}
   link: {fileID: 0}
-=======
   m_GameObject: {fileID: 150222705}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -393,7 +388,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: c24014bb2573314439344bb71ce5ef2e, type: 3}
->>>>>>> 2f5ef08a9218e5042b38e477333466fb7ffc28a1
 --- !u!1001 &156780298
 PrefabInstance:
   m_ObjectHideFlags: 0
