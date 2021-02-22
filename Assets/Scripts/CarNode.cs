@@ -17,4 +17,9 @@ public class CarNode : MonoBehaviour{
         return Vector3.Lerp(minBound,MAXBound,Random.Range(0,1));
     }    
 
+    void OnDrawGizmos() {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawSphere(transform.position ,0.5f);
+    }
+
 }

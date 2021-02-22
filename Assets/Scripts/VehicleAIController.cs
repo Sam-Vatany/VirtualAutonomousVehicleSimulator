@@ -161,10 +161,4 @@ public class VehicleAIController : MonoBehaviour{
 
     }
 
-    void OnDrawGizmos() {
-        Gizmos.color = Color.yellow;
-        if(currentNode != null)
-        Gizmos.DrawSphere(currentNode.transform.position ,0.5f);
-    }
-
 }
