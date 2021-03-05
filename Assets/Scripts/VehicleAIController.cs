@@ -116,12 +116,12 @@ public class VehicleAIController : MonoBehaviour{
             }
         }
 
-        //front left sensor angle
+        //front left angle sensor
         if (Physics.Raycast(sensorStartPos, Quaternion.AngleAxis(-frontSensorAngle, transform.up) * transform.forward, out hit, angledSensorLength)) {
             Debug.DrawLine(sensorStartPos, hit.point, Color.red, 0.01f);
             if (hit.collider.CompareTag("Character")) {
                 avoiding = true;
-                avoidMultiplier = -0.5f;
+                avoidMultiplier = 0.5f;
             }
         }
 
