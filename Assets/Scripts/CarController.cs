@@ -49,7 +49,7 @@ public class CarController : MonoBehaviour
         frontLeftWheelCollider.motorTorque = verticalInput * motorForce;
         frontRightWheelCollider.motorTorque = verticalInput * motorForce;
         currentBrakeForce = isBraking ? brakeForce : 0f;
-        ApplyBraking();       
+        ApplyBraking();
     }
 
     private void ApplyBraking()
@@ -79,7 +79,7 @@ public class CarController : MonoBehaviour
     {
         Vector3 pos;
         Quaternion rot
-;       wheelCollider.GetWorldPose(out pos, out rot);
+; wheelCollider.GetWorldPose(out pos, out rot);
         wheelTransform.rotation = rot;
         wheelTransform.position = pos;
     }
